@@ -1,5 +1,4 @@
 require 'webrick'
-require 'pry'
 
 # runs on http://localhost:4000/. 
 # sets value with http://localhost:4000/set?somekey=somevalue 
@@ -9,20 +8,16 @@ class Database
   attr_reader :data_hash
   
   def initialize
-    @data_hash = {}
+    @data_hash = Hash.new(nil)
   end
 
   def get(key)
-    if @data_hash.key? key
-      {key => @data_hash[key]}
-    else
-      "key not found"
-    end
+    { key => @data_hash[key] }
   end
 
   def set(key_value_pair)
     @data_hash.merge! key_value_pair
-    key_value_pair
+    return key_value_pair
   end
 end
 
