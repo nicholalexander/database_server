@@ -1,0 +1,15 @@
+---
+'1': !ruby/string:WEBrick::HTTPUtils::FormData
+  str: asdf
+  next_data: 
+  filename: 
+  name: '1'
+  raw_header: &1 []
+  header: &2 {}
+'2': !ruby/string:WEBrick::HTTPUtils::FormData
+  str: jkl
+  next_data: 
+  filename: 
+  name: '2'
+  raw_header: *1
+  header: *2
