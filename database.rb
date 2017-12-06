@@ -1,5 +1,7 @@
+require 'pry'
 require 'webrick'
 require 'yaml'
+require 'pstore'
 
 # runs on http://localhost:4000/.
 # sets value with http://localhost:4000/set?somekey=somevalue
@@ -34,11 +36,18 @@ class Database
   private
 
   def write_to_disk
-    File.open("#{@file_name}", 'w') {|f| f.write @data_hash.to_yaml } #Store
+    store = PStore.new("data.pstore") 
+    store.transaction do
+      store[:data_hash] = @data_hash
+      store.commit
+    end
   end
 
   def read_from_disk
-    @data_hash = YAML::load_file("#{@file_name}")
+    store = PStore.new("data.pstore") 
+    store.transaction do
+      @data_hash = store[:data_hash]
+    end
   end
 end
 
